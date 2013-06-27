@@ -1,4 +1,4 @@
-##Test if this comment gets pushed and pulled
+##Test if this comment get autodeployed
 
 shinyUI(bootstrapPage(
 
