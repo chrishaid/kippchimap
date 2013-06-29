@@ -1,4 +1,4 @@
-##Test if this comment get autodeployed test 7
+##Test if this comment get autodeployed test 8
 
 shinyUI(bootstrapPage(
 
