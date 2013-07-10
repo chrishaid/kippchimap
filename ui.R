@@ -10,7 +10,7 @@ shinyUI(pageWithSidebar(
     selectInput(inputId = "school",
                 label="School:",
                 choices=c("KAPS", "KAMS", "KCCP"),
-                selected = "KAPS"),
+                selected = "KAMS"),
     
     selectInput(inputId = "subject",
                 label = "Subject:",
@@ -20,7 +20,7 @@ shinyUI(pageWithSidebar(
     selectInput(inputId = "grade",
                 label = "Grade Level:",
                 choices = c("K", "1", "2", "5", "6", "7", "8"),
-                selected = "K")
+                selected = "5")
     ),
   
   # Main plotting Panel
