@@ -8,19 +8,36 @@ log <- function(text, file="log.txt"){
   print(text)
 }
 
+
+log("Loading requried packages")
+library(shiny)
+require(data.table)
+require(ggplot2)
+
+#load MAP Helper functions
+log("Loading MAP graphing functions")
+
+source("lib/MAP_helper_functions.R")
+
+#need to load one-time per session.
+log("Loading dataset...")
+
+map.data <- read.csv("data/map.scores.by.grade.csv")
+map.data <- data.table(map.data)
+
+
 shinyServer(function(input, output) {
   
   log("Server init.")
   
   getData <- reactive(function(){
-    log("Getting dataset...")
+    log("Subsetting dataset...")
     
-    if (input$dataset == "Geyeser"){
-      return(faithful$eruptions)
-    }
-    if (input$dataset == "NYC Wind"){
-      return(airquality$Wind)
-    }
+    map.data[Fall12_Grade     == input$grade & 
+               Subject        == input$subject & 
+               SchoolInitials == input$school
+             ]
+    
   })
   
   dataName <- reactive(function(){
@@ -34,24 +51,13 @@ shinyServer(function(input, output) {
     }
   })
   
-  output$main_plot <- reactivePlot(function() {
-    log("Plotting hist...")
-    
-    hist(getData(),
-      probability = TRUE,
-      breaks = as.numeric(input$n_breaks),
-      xlab = dataName(),
-      main = "Histogram of Data")
+  output$main_plot <- renderPlot(function() {
+    log("Plotting MAP Results...")
+  
+    ptitle <- paste0(input$school, " 2012-13 MAP Scores ",input$grade," ",input$subject, "\nFall and Spring RIT Scores vs Expected Growth and College Ready Growth\nby Fall Quartile")
+   
+    p<-plot_MAP_Results_and_Goals(getData(), ptitle, labxpos=100, minx=95,alp=.6) 
 
-    if (input$individual_obs) {
-      rug(getData())
-    }
-
-    if (input$density) {
-      dens <- density(getData(),
-          adjust = input$bw_adjust)
-      lines(dens, col = "blue")
-    }
-
+    print(p)
   })
 })

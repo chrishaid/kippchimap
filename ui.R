@@ -1,32 +1,31 @@
-##Test if this comment get autodeployed test 12
+library(shiny)
 
-shinyUI(bootstrapPage(
+shinyUI(pageWithSidebar(
 
-  selectInput(inputId = "dataset",
-              label="Dataset to visualize:",
-              choices=c("Geyeser", "NYC Wind"),
-              selected = "Geyeser"),
+  # Applicaiton Title
+  headerPanel("MAP Shiny Server Test App"),
   
-  selectInput(inputId = "n_breaks",
-      label = "Number of bins in histogram (approximate):",
-      choices = c(10, 20, 35, 50),
-      selected = 20),
-
-  checkboxInput(inputId = "individual_obs",
-      label = strong("Show individual observations"),
-      value = FALSE),
-
-  checkboxInput(inputId = "density",
-      label = strong("Show density estimate"),
-      value = FALSE),
-
-  plotOutput(outputId = "main_plot", height = "300px"),
-
-  # Display this only if the density is shown
-  conditionalPanel(condition = "input.density == true",
-    sliderInput(inputId = "bw_adjust",
-        label = "Bandwidth adjustment:",
-        min = 0.2, max = 2, value = 1, step = 0.2)
+  # Selections side bar
+  sidebarPanel(
+    selectInput(inputId = "school",
+                label="School:",
+                choices=c("KAPS", "KAMS", "KCCP"),
+                selected = "KAPS"),
+    
+    selectInput(inputId = "subject",
+                label = "Subject:",
+                choices = c("Mathematics", "Reading"),
+                selected = "Mathematics"),
+    
+    selectInput(inputId = "grade",
+                label = "Grade Level:",
+                choices = c("K", "1", "2", "5", "6", "7", "8"),
+                selected = "K")
+    ),
+  
+  # Main plotting Panel
+  mainPanel(
+    plotOutput(outputId = "main_plot", height = "600px")
+    )
   )
-
-))
+)
