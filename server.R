@@ -12,6 +12,7 @@ log <- function(text, file="log.txt"){
 log("Loading requried packages")
 library(shiny)
 require(data.table)
+require(grid)
 require(ggplot2)
 
 #load MAP Helper functions

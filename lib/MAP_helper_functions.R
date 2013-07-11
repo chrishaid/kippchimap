@@ -43,6 +43,10 @@ get_group_stats<-function(df, grp="Quartile",RIT="Fall12_RIT"){
 
 #Function to report MAP RIT scores and goals (expected adn expected at 7th percentile) with summary stats
 plot_MAP_Results_and_Goals <- function (df, plottitle=" ",labxpos=115, minx=105,alp=1) {
+  
+  require(grid)
+  require(ggplot2)
+  
   kippcols<-c("#E27425", "#FEBC11", "#255694", "A7CFEE")
   
   #Plot points for Fall RIT Score, Expected Growth, College Ready Growth, ordered by Fall RIT, Names on Y axis
